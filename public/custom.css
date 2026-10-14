@@ -1,0 +1,56 @@
+/* Custom Chainlit styling to make the thread history empty state look like clean placeholder paragraph content */
+
+/* Target the empty state alert in the sidebar */
+[data-sidebar="sidebar"] .alert,
+[data-sidebar="content"] .alert,
+aside .alert,
+.alert[role="status"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 1rem 0.5rem !important;
+    margin: 0.5rem 0 !important;
+}
+
+/* Hide the blue informational alert icon */
+[data-sidebar="sidebar"] .alert svg,
+[data-sidebar="content"] .alert svg,
+aside .alert svg,
+.alert[role="status"] svg {
+    display: none !important;
+}
+
+/* Convert flex alert wrapper into a natural paragraph layout */
+[data-sidebar="sidebar"] .alert > div,
+[data-sidebar="content"] .alert > div,
+aside .alert > div,
+.alert[role="status"] > div {
+    display: block !important;
+}
+
+/* Style the text as muted placeholder paragraph */
+[data-sidebar="sidebar"] .alert,
+[data-sidebar="sidebar"] .alert *,
+[data-sidebar="content"] .alert,
+[data-sidebar="content"] .alert *,
+aside .alert,
+aside .alert *,
+.alert[role="status"],
+.alert[role="status"] * {
+    color: hsl(var(--muted-foreground, 215.4 16.3% 56.9%)) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+    opacity: 0.75 !important;
+}
+
+/* Also style cmdk search empty placeholder text */
+[cmdk-empty] {
+    color: hsl(var(--muted-foreground, 215.4 16.3% 56.9%)) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    opacity: 0.75 !important;
+    padding: 1rem 0.5rem !important;
+}

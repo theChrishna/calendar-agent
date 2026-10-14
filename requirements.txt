@@ -1,0 +1,8 @@
+chainlit
+google-genai
+python-dotenv
+google-api-python-client
+google-auth-oauthlib
+sqlalchemy>=2.0.0
+aiosqlite>=0.20.0
+greenlet

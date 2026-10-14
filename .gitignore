@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Sensitive credentials & keys
+.env
+credentials.json
+token.json
+
+# SQLite database & chat history
+*.db
+*.sqlite
+*.sqlite3
+chainlit.db
+
+# Chainlit runtime files
+.files/
+
+# macOS / Editor
+.DS_Store
+.vscode/
+.idea/
