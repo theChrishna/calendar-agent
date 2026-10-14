@@ -1,7 +1,9 @@
 import datetime as dt
 import os
 import sqlite3
+from typing import Optional
 from zoneinfo import ZoneInfo
+
 
 import chainlit as cl
 from chainlit.data.sql_alchemy import SQLAlchemyDataLayer
@@ -126,9 +128,24 @@ def get_data_layer():
     return SQLAlchemyDataLayer(conninfo="sqlite+aiosqlite:///chainlit.db")
 
 
-@cl.header_auth_callback
-def header_auth_callback(headers: dict):
-    return cl.User(identifier="user", display_name="You", metadata={"role": "user"})
+@cl.oauth_callback
+def oauth_callback(
+    provider_id: str,
+    token: str,
+    raw_user_data: dict,
+    default_user: cl.User,
+) -> Optional[cl.User]:
+    return default_user
+
+
+@cl.password_auth_callback
+def password_auth_callback(username: str, password: str) -> Optional[cl.User]:
+    admin_user = os.getenv("AUTH_USER", "krisminds1@gmail.com")
+    admin_pass = os.getenv("AUTH_PASSWORD", "admin")
+    if username == admin_user and password == admin_pass:
+        return cl.User(identifier=username, display_name=username, metadata={"role": "admin"})
+    return None
+
 
 
 SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
@@ -336,10 +353,13 @@ GEMINI_TOOLS = [
 @cl.on_chat_start
 async def start():
     cl.user_session.set("history", [])
+    user = cl.user_session.get("user")
+    name = (user.display_name or user.identifier) if user else "there"
     await cl.Message(
-        "Send me an event in plain words, or drop in a notice (photo/PDF/text). "
+        f"Hi {name}! Send me an event in plain words, or drop in a notice (photo/PDF/text). "
         "I'll show you what I found before adding anything to your calendar."
     ).send()
+
 
 
 @cl.on_chat_resume
